@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClub.lib", "MyClub\MyClub.lib.csproj", "{81AD0439-130A-4B20-A228-424CC809A6C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClub.UI", "MyClub.UI\MyClub.UI.csproj", "{A650C443-EEBF-4DE8-A66C-E80E817A3ADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{66F31CAE-E57C-4FAB-BE9B-A60557D956D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81AD0439-130A-4B20-A228-424CC809A6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81AD0439-130A-4B20-A228-424CC809A6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81AD0439-130A-4B20-A228-424CC809A6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81AD0439-130A-4B20-A228-424CC809A6C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A650C443-EEBF-4DE8-A66C-E80E817A3ADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A650C443-EEBF-4DE8-A66C-E80E817A3ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A650C443-EEBF-4DE8-A66C-E80E817A3ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A650C443-EEBF-4DE8-A66C-E80E817A3ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F31CAE-E57C-4FAB-BE9B-A60557D956D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F31CAE-E57C-4FAB-BE9B-A60557D956D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F31CAE-E57C-4FAB-BE9B-A60557D956D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F31CAE-E57C-4FAB-BE9B-A60557D956D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25BE32AB-79A0-4375-8C90-DD8DF6F60FC5}
+	EndGlobalSection
+EndGlobal
