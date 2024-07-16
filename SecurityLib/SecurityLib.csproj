@@ -95,6 +95,10 @@
       <Project>{a650c443-eebf-4de8-a66c-e80e817a3adc}</Project>
       <Name>MyClub.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyClubLib\MyClubLib.csproj">
+      <Project>{851890dd-e301-4134-b8da-7ad01bbf4b2a}</Project>
+      <Name>MyClubLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

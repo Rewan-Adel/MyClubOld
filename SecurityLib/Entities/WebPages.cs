@@ -7,5 +7,7 @@ namespace SecurityLib.Entities
 {
     public class WebPages
     {
+        //This class represents a web page within the application,
+        // including properties such as URL, title, and possibly associated permissions.
     }
 }

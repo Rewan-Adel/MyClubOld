@@ -1,41 +1,29 @@
 ﻿using System;
 using System.Transactions;
 using MyClub.UI.Models;
+using context =  MyClubLib.Repository;
 
 namespace SecurityLib.Entities
 {
+
     public class Profile
     {
-        public void createPerson(Person person)
+        //This class likely represents a user profile,
+        // including properties related to user information, roles, and other attributes
+        
+        public void CreateProfile(Person person)
         {
-            using (var scope = new TransactionScope())
+            var profile = new User_Profile()
             {
-                try
-                {
-                    var newPerson = new Person() 
-                    {
-                          PersonName = person.PersonName,
-                          Gender = person.Gender,
-                          BirthDate = person.BirthDate,
-                          MobileNumber = person.MobileNumber,
-                          HomePhoneNumber = person.HomePhoneNumber,
-                          Email = person.Email,
-                          Address = person.Address,
-                          Nationality = person.Nationality,
+                UserID   = person.PersonId,
+                UserName = person.PersonName,
+                IsActive = true,
+                IsAdmin  = false,
+                Enable   = true
+            };
 
-                          RegistrationDate = DateTime.Now
-                          
-                    };
-                                     
-                    scope.Complete();
-                }
-                catch (Exception ex)
-                {
-                    scope.Dispose();
-                    throw new Exception(ex.Message);
-                }
-            }
+         context.EFClubRepository.
         }
-
+        
     }
 }

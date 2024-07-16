@@ -53,7 +53,11 @@ namespace MyClubLib.Repository
         End_MemberOffer    = 23,
         Edit_MemberOffer   = 24,
 
-        Apply_Offer        = 25
+        Apply_Offer        = 25,
+
+        Create_Person = 26,
+        Edit_Person   = 27,
+        Delete_Person = 28,
     }
 
     public enum ActionType
