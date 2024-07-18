@@ -7,17 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class OfferPricelid
+    public partial class Trainer
     {
-        public int OfferPricelidId { get; set; }
-        public Nullable<int> OfferPriceId { get; set; }
+        public int TrainerId { get; set; }
+        public Nullable<int> PersonId { get; set; }
         public Nullable<bool> IsActive { get; set; }
     
-        public virtual OfferPrice OfferPrice { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

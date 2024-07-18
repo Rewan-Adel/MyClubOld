@@ -26,5 +26,11 @@ namespace MyClub.UI.Controllers
 
             return View();
         }
+        public ActionResult Members()
+        {
+            ViewBag.Message = "Members.";
+
+            return View();
+        }
     }
 }

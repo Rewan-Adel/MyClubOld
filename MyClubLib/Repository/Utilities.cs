@@ -1,4 +1,8 @@
 ﻿
+using System.Linq;
+using System.Net;
+using System.Web;
+
 namespace MyClubLib.Repository
 {
     public enum MasterEntity
@@ -22,42 +26,37 @@ namespace MyClubLib.Repository
     }
     public enum Action
     {
+
+        
         Create_Member      = 1,
         Edit_Member        = 2,
         Delete_Member      = 3,
         
-        Create_Trainer     = 4,
-        Edit_Trainer       = 5,
-        Delete_Trainer     = 6,
+        Create_Service     = 4,
+        Delete_Service     = 5,
+        Enable_Service     = 6,
+        Disable_Service    = 7,
+        Edit_ServicePrice  = 8,
+        Edit_ServiceName   = 9,
 
-        Create_Service     = 7,
-        Edit_Service       = 8,
-        Delete_Service     = 9,
-        Enable_Service     = 10,
-        Disable_Service    = 11,
+        Attendance_Edit         = 11,
+        Attendance_Registration = 12,
+        Attendance_Confirmation = 13,
 
-        Create_Offer       = 11,
-        Edit_Offer         = 12,
-        Delete_Offer       = 13,
-        Edit_OfferPrice    = 14,
-        Create_OfferDetail = 15,
-        Edit_OfferDetail   = 16,
-        Delete_OfferDetail = 17,
+        create_MemberOffer = 13,
+        Delete_MemberOffer = 14,
+        Edit_MemberOffer   = 15,
+        Start_MemberOffer  = 16,
+        End_MemberOffer    = 17,
 
-        Add_MemberAttendance  = 18,
-        Edit_MemberAttendance = 19,
-       
-        create_MemberOffer = 20,
-        Delete_MemberOffer = 21,
-        Start_MemberOffer  = 22,
-        End_MemberOffer    = 23,
-        Edit_MemberOffer   = 24,
 
-        Apply_Offer        = 25,
-
-        Create_Person = 26,
-        Edit_Person   = 27,
-        Delete_Person = 28,
+        //Create_Profile = 1,
+        //Edit_Profile   = 2,
+        // Delete_Profile = 3,
+        //Apply_Offer        = 25,
+        //Create_Trainer     = 4,
+        //Edit_Trainer       = 5,
+        //Delete_Trainer     = 6,
     }
 
     public enum ActionType
@@ -66,8 +65,17 @@ namespace MyClubLib.Repository
         Edit   = 2,
         Delete = 3 
     }
+
     public class Utilities
     {
-      
+       public string GetIpAddress()
+       {
+            string hostName = Dns.GetHostName(); // Retrive the Name of HOST
+            var hostEntry   = Dns.GetHostEntry(hostName);
+            var ipAddress   = hostEntry.AddressList
+                .FirstOrDefault(ip => ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork);
+
+            return ipAddress?.ToString();
+        }
     }
 }

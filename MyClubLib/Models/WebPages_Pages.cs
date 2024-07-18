@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Trainer
+    public partial class WebPages_Pages
     {
-        public int TrainerId { get; set; }
-        public Nullable<int> PersonId { get; set; }
-        public Nullable<bool> IsActive { get; set; }
+        public int PageID { get; set; }
+        public string PageName { get; set; }
+        public string PageTitle { get; set; }
+        public bool RelatedTo { get; set; }
     
-        public virtual Person Person { get; set; }
+        public virtual webPages_UserPermessions webPages_UserPermessions { get; set; }
     }
 }

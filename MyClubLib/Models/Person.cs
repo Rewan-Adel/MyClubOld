@@ -7,13 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
-
-    public partial class Person 
+    
+    public partial class Person
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
@@ -23,6 +22,7 @@ namespace MyClub.UI.Models
     
         public int PersonId { get; set; }
         public string PersonName { get; set; }
+        public string Password { get; set; }
         public string Gender { get; set; }
         public System.DateTime BirthDate { get; set; }
         public string MobileNumber { get; set; }

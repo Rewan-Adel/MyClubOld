@@ -7,24 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Action
+    public partial class OfferDuration
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Action()
+        public OfferDuration()
         {
-            this.AuditTrails = new HashSet<AuditTrail>();
+            this.OfferPrices = new HashSet<OfferPrice>();
         }
     
-        public int ActionId { get; set; }
-        public string ActionName { get; set; }
-        public string DisplayName { get; set; }
+        public int OfferDurationId { get; set; }
+        public string OfferDurationName { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> IsVisible { get; set; }
+        public Nullable<int> Days { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AuditTrail> AuditTrails { get; set; }
+        public virtual ICollection<OfferPrice> OfferPrices { get; set; }
     }
 }

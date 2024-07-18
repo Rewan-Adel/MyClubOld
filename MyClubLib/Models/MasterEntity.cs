@@ -7,29 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Member
+    public partial class MasterEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Member()
+        public MasterEntity()
         {
-            this.MemberOffers = new HashSet<MemberOffer>();
+            this.AuditTrails = new HashSet<AuditTrail>();
         }
     
-        public int MemberId { get; set; }
-        public string MemberName { get; set; }
-        public Nullable<int> PersonId { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<int> RegisteredById { get; set; }
-        public Nullable<System.DateTime> RegistrationDate { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public int EntityId { get; set; }
+        public string EntityName { get; set; }
+        public string DisplayName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MemberOffer> MemberOffers { get; set; }
-        public virtual Person Person { get; set; }
+        public virtual ICollection<AuditTrail> AuditTrails { get; set; }
     }
 }

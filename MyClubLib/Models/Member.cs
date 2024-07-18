@@ -7,26 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class OfferDuration
+    public partial class Member
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public OfferDuration()
+        public Member()
         {
-            this.OfferPrices = new HashSet<OfferPrice>();
+            this.MemberOffers = new HashSet<MemberOffer>();
         }
     
-        public int OfferDurationId { get; set; }
-        public string OfferDurationName { get; set; }
-        public string Description { get; set; }
-        public Nullable<bool> IsVisible { get; set; }
-        public Nullable<int> Days { get; set; }
+        public int MemberId { get; set; }
+        public string MemberName { get; set; }
+        public Nullable<int> PersonId { get; set; }
+        public Nullable<int> UserId { get; set; }
+      //public Nullable<int> RegisteredById { get; set; }
+        public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OfferPrice> OfferPrices { get; set; }
+        public virtual ICollection<MemberOffer> MemberOffers { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

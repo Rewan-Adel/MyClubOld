@@ -7,20 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class MemberAttendance
+    public partial class sysdiagram
     {
-        public int AttendanceId { get; set; }
-        public Nullable<int> MemberOfferId { get; set; }
-        public Nullable<int> ServiceId { get; set; }
-        public Nullable<System.DateTime> AttendanceDate { get; set; }
-        public string ReplacedBy { get; set; }
-    
-        public virtual MemberOffer MemberOffer { get; set; }
-        public virtual service service { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

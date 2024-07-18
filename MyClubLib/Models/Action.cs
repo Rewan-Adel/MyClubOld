@@ -7,27 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyClub.UI.Models
+namespace MyClubLib.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class User_Profile
+    public partial class Action
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User_Profile()
+        public Action()
         {
-            this.webpages_Roles = new HashSet<webpages_Roles>();
+            this.AuditTrails = new HashSet<AuditTrail>();
         }
     
-        public int UserID { get; set; }
-        public string UserName { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsAdmin { get; set; }
-        public bool Enable { get; set; }
+        public int ActionId { get; set; }
+        public string ActionName { get; set; }
+        public string DisplayName { get; set; }
     
-        public virtual webPages_UserPermessions webPages_UserPermessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<webpages_Roles> webpages_Roles { get; set; }
+        public virtual ICollection<AuditTrail> AuditTrails { get; set; }
     }
 }
