@@ -19,12 +19,12 @@ namespace MyClubLib.Models
         {
             this.MemberOffers = new HashSet<MemberOffer>();
         }
-    
+       
         public int MemberId { get; set; }
         public string MemberName { get; set; }
         public Nullable<int> PersonId { get; set; }
         public Nullable<int> UserId { get; set; }
-      //public Nullable<int> RegisteredById { get; set; }
+        public Nullable<int> RegisteredById { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     

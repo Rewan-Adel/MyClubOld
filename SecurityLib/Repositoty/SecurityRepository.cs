@@ -17,37 +17,14 @@ namespace SecurityLib.Repositoty
             _db = new MyClubDBEntities();
             _repository = new EFClubRepository();
         }
-        private void ValidateUser(Person user, string password)
+        private void ValidateUser(string user,string userPass, string password)
         {
-            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, userPass) )
             {
                 throw new Exception("Invalid username or password!");
             }
         }
-        public void CreateProfile(string userName, bool isActive)
-        {
-            using (var scope = new TransactionScope())
-            {
-                try
-                {
-                    var profile = new User_Profile()
-                    {
-                        UserName = userName,
-                        IsActive = isActive,
-                        IsAdmin = false,
-                        Enable = true
-                    };
-                    _repository.Add(profile);
 
-                    _repository.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    scope.Dispose();
-                    throw new Exception(ex.Message);
-                }
-            }
-        }
 
         public bool IsActiveUser(string userName)
         {
@@ -68,7 +45,22 @@ namespace SecurityLib.Repositoty
                 throw new Exception(ex.Message);
             }
         }
+        public void enableUser(string username, bool isActive)
+            {
+            try
+            {
+                var user = _repository.FindByName<User_Profile>(username);
+                if (user == null)
+                    throw new Exception("User not found");
 
+                user.IsActive = isActive;
+                _repository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public bool AdminPermissions(string userName)
         {
             try
@@ -90,37 +82,32 @@ namespace SecurityLib.Repositoty
             }
         }
 
-        public Person Register(int? userId, string PersonName, string password, string Gender, DateTime BirthDate, string MobileNumber, string HomePhoneNumber,
+        public Person Register(int? userId, string PersonName, string password, string Gender, string MobileNumber, string HomePhoneNumber,
                                  string Email, string Address, string Nationality)
         {
-            Person person = _repository.CreatePerson(userId,
+            try
+            {
+                Person person = _repository.CreatePerson(userId,
                                                      PersonName,
                                                      password,
                                                      Gender,
-                                                     BirthDate,
+                                                     
                                                      MobileNumber,
                                                      HomePhoneNumber,
                                                      Email,
                                                      Address,
                                                      Nationality);
-            return person;
-        }
-        public void Login(string userName, string password)
-        {
-            using (var scope = new TransactionScope())
-            {
-                try
-                {
-                    var User = _repository.FindByName<Person>(userName);
-                    ValidateUser(User, password);
-                    scope.Complete();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message);
-                }
+
+                _repository.CreateProfile(person.PersonName, true);
+
+                _repository.SaveChanges();
+
+                return person;
             }
-           
+            catch(Exception ex)
+            {
+                throw new Exception( ex.ToString());
+            }
         }
 
         public void ChangePassword(string userName, string password)

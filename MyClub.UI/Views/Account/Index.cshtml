@@ -4,29 +4,78 @@
     ViewBag.Title = "Registration";
 }
 
-<h2>Registration</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Sign up</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="text" value="Create"  class="btn btn-default" />
-                <input type="submit" value="Create" class="btn btn-default" />
-                <input type="submit" value="Create" class="btn btn-default" />
-                <input type="submit" value="Create" class="btn btn-default" />
-                <input type="submit" value="Create" class="btn btn-default" />
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+<form id="signupForm" method="post" action="@Url.Action("Signup", "Account")">
+    <div>
+        <label for="PersonName">user name</label>
+        <input type="text" id="PersonName" name="PersonName" required />
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <!-- Add other fields similarly -->
+    <div>
+        <label for="password">password</label>
+        <input type="password" id="password" name="password" required />
+    </div>
+
+    
+    <div>
+        <label for="Gender">Gender</label>
+        <input type="text" id="Gender" name="Gender" required />
+    </div>   
+    <div>
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" required />
+     </div>
+
+    <div> 
+        <label for="MobileNumber">MobileNumber</label>
+        <input type="text" id="MobileNumber" name="MobileNumber" required />
+    </div>
+    
+    <div>
+        <label for="HomePhoneNumber">HomePhoneNumber</label>
+        <input type="text" id="HomePhoneNumber" name="HomePhoneNumber" required />
+    </div> 
+    
+    <div>
+        <label for="Address">Address</label>
+        <input type="text" id="Address" name="Address" required />
+    </div> 
+    
+    <div>
+        <label for="Nationality">Nationality</label>
+        <input type="text" id="Nationality" name="Nationality" required />
+    </div>
+
+    <div>
+        <label for="Birthday">birthday</label>
+        <input type="datetime" id="Birthday" name="Birthday" required />
+    </div>
+    <!-- Add other fields similarly -->
+    <button type="submit">Sign Up</button>
+</form>
+
+@section scripts {
+    <script>
+        $(document).ready(function() {
+            $('#signupForm').submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("Signup", "Account")',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        console.log(response);
+                        if (response.success) {
+                            alert(response.message);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -228,6 +228,16 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyClubLib\MyClubLib.csproj">
+      <Project>{851890dd-e301-4134-b8da-7ad01bbf4b2a}</Project>
+      <Name>MyClubLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurityLib\SecurityLib.csproj">
+      <Project>{67d0e78f-3d96-4a70-a14e-03eec0bcc5b0}</Project>
+      <Name>SecurityLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

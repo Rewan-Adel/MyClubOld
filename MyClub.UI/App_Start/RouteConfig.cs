@@ -13,18 +13,21 @@ namespace MyClub.UI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "hDefault",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
+              routes.MapRoute(
                name: "Default",
                url: "{controller}/{action}/{id}",
                  defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional }
            );
-
+            routes.MapRoute(
+              name: "Home",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+          );
+            routes.MapRoute(
+            name: "signup",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Account", action = "signup", id = UrlParameter.Optional }
+        );
         }
     }
 }

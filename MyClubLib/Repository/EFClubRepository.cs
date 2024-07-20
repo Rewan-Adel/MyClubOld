@@ -1,10 +1,11 @@
-﻿using BCrypt.Net;
-using MyClubLib.Models;
+﻿using MyClubLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Transactions;
 using System.Web.UI.WebControls;
 
@@ -22,7 +23,19 @@ namespace MyClubLib.Repository
             utilities = new Utilities();
         }
 
-        public void SaveChanges() => _db.SaveChanges();
+        public void SaveChanges()
+        {
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.ToString());
+            }
+            }
+       
         public List<T> GetAll<T>() where T : class => _db.Set<T>().ToList();
         public T Find<T>(long id) where T : class => _db.Set<T>().Find(id);
         public T FindByName<T>(string userName) where T : class => _db.Set<T>().Find(userName);
@@ -55,7 +68,50 @@ namespace MyClubLib.Repository
             }
         }
 
-        public void CreateMember(string memberName, int personId, int? userId)
+
+
+        public Person CreatePerson(int? userId, string PersonName, string password, string Gender, string MobileNumber, string HomePhoneNumber,
+                               string Email, string Address, string Nationality)
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var newPerson = new Person()
+                    {
+                        PersonName = PersonName,
+                        Password = BCrypt.Net.BCrypt.HashPassword(password),
+                        Gender = Gender,
+                        //BirthDate = BirthDate,
+                        MobileNumber = MobileNumber,
+                        HomePhoneNumber = HomePhoneNumber,
+                        Email = Email,
+                        Address = Address,
+                        Nationality = Nationality,
+                        RegistrationDate = DateTime.Now,
+                        UserId = userId
+                    };
+
+
+                    Member member = CreateMember(PersonName, newPerson.PersonId, userId);
+                    MemberOffer memberOffer = CreateMemberOffer(member.MemberId,"Offer", null, null, offerStatus.unctive, userId, null, null, null, null, null);
+
+                    newPerson.MemberOfferId = memberOffer.MemberOfferId;
+
+                    Add(newPerson);
+                    SaveChanges();
+                    scope.Complete();
+                    return newPerson;
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception("error in create person", ex);
+                }
+            }
+        }
+
+        public Member CreateMember(string memberName, int personId, int? userId)
         {
             using (var scope = new TransactionScope())
             {
@@ -69,29 +125,72 @@ namespace MyClubLib.Repository
                         RegistrationDate = DateTime.Now,
                         LastModifiedDate = DateTime.Now
                     };
-                    string entityRecord = "";
                     if (userId != null)
                     {
-                        var user = Find<Person>((int)userId);
-                        entityRecord = $"{user.PersonName} added new member {memberName} to the system.";
+                        string entityRecord = userId != null
+                          ? $"{Find<Person>((int)userId).PersonName} added new member {memberName} to the system."
+                          : $"{memberName} added to the system.";
                     }
-
-                    else entityRecord = $"{memberName} added to the system.";
-
+                
                     Add(Member);
-                    CreateAudit(ActionType.Add, Action.Create_Member, Member.UserId, MasterEntity.Member, entityRecord);
+                //    CreateAudit(ActionType.Add, Action.Create_Member, Member.UserId, MasterEntity.Member, entityRecord);
                     SaveChanges();
 
                     scope.Complete();
+
+                    return Member;
                 }
                 catch (Exception ex)
                 {
                     scope.Dispose();
-                    throw new Exception(ex.Message);
+                    throw new Exception("error in create member", ex);
                 }
             }
 
         }
+
+        public MemberOffer CreateMemberOffer(int MemberId, string note, int? OfferPriceId, decimal? PaymentAmount, /* DateTime PaymentDate,*/
+                                     offerStatus CurrentStatusId, int? CreatedById,/* DateTime?? CreationDate*/ decimal? MemberPrice, decimal? DiscountPercent, decimal? DiscountValue,
+                                      int? DiscountById,/* DateTime ?? EndDate,*/ int? TrainerId)
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var offer = new MemberOffer()
+                    {
+                        MemberId = MemberId,
+                        OfferPriceId = OfferPriceId,
+                        PaymentAmount = PaymentAmount,
+                        CurrentStatusId = (int)CurrentStatusId,
+                        CreatedById = CreatedById,
+                        MemberPrice = MemberPrice,
+                        DiscountPercent = DiscountPercent,
+                        DiscountValue = DiscountValue,
+                        CreationDate = DateTime.Now,
+                        TrainerId = TrainerId,
+                        Note = note
+                    };
+
+                    Add(offer);
+                    SaveChanges();
+                    scope.Complete();
+
+                    return offer;
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.ToString());
+                }
+
+
+            }
+        }
+
+
+
+
         public void DeleteMember(int memberId)
 
         {
@@ -142,43 +241,7 @@ namespace MyClubLib.Repository
                 }
             }
         }
-        public Person  CreatePerson(int? userId, string PersonName, string password ,string Gender, DateTime BirthDate, string MobileNumber, string HomePhoneNumber,
-                                 string Email, string Address, string Nationality)
-        {
-            using (var scope = new TransactionScope())
-            {
-                try
-                {
-                    var newPerson = new Person()
-                    {
-                        PersonName = PersonName,
-                        Password = BCrypt.Net.BCrypt.HashPassword(password),
-                        Gender = Gender,
-                        BirthDate = BirthDate,
-                        MobileNumber = MobileNumber,
-                        HomePhoneNumber = HomePhoneNumber,
-                        Email = Email,
-                        Address = Address,
-                        Nationality = Nationality,
-                        RegistrationDate = DateTime.Now,
-                        UserId = userId
-                    };
-                   
-
-                    Add(newPerson);
-                    CreateMember(PersonName, newPerson.PersonId, userId);
-                    SaveChanges();
-
-                    scope.Complete();
-                    return newPerson;
-                }
-                catch (Exception ex)
-                {
-                    scope.Dispose();
-                    throw new Exception(ex.Message);
-                }
-            }
-        }
+      
         public void DeletePesron(int personId)
         {
             using (var scope = new TransactionScope())
@@ -191,7 +254,7 @@ namespace MyClubLib.Repository
                     {
                         string entityRecord = $"Deleting {person.PersonName} successfully";
                         Delete(person);
-                        CreateAudit(ActionType.Delete, Action.Delete_Person, person.PersonId, MasterEntity.Member, entityRecord);
+                        CreateAudit(ActionType.Delete, Action.Delete_Member, person.PersonId, MasterEntity.Member, entityRecord);
                     }
 
                     scope.Complete();
@@ -428,6 +491,158 @@ namespace MyClubLib.Repository
             }
         }
 
+
+        public void CreateProfile(string userName, bool isActive)
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var profile = new User_Profile()
+                    {
+                        UserName = userName,
+                        IsActive = isActive,
+                        IsAdmin = false,
+                        Enable = true
+                    };
+                    Add(profile);
+                    SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception("error in create profile", ex);
+                }
+            }
+        }
+
+        
+        public void CreateOfferPrice(decimal price, DateTime? StartDate, DateTime? EndDate, int? OfferDurationId,
+            bool? IsActive, int? MaxFreezingDays)
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var newOfferPrice = new OfferPrice()
+                    {
+                     Price = price,
+                     StartDate = StartDate,
+                     EndDate = EndDate,
+                     OfferDurationId = OfferDurationId,
+                     IsActive = IsActive,
+                     MaxFreezingDays = MaxFreezingDays,
+                     CreationDate   = DateTime.Now
+                    };
+
+        
+                    Add(newOfferPrice);
+                    SaveChanges();
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.ToString());
+                }
+
+
+            }
+        }
+
+        public void CreateOfferDuration(string OfferDurationName, string Description, bool? IsVisible, int? Days)
+
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var newOfferPrice = new OfferDuration()
+                    {
+                        OfferDurationName = OfferDurationName,
+                        Description = Description,
+                        IsVisible = IsVisible,
+                        Days = Days
+                    };
+
+
+                    Add(newOfferPrice);
+                    SaveChanges();
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.ToString());
+                }
+
+
+
+    }
+        }
+
+        public void CreateOfferDetail(int OfferPriceId, int serviceID,  int serviceLimitNum )
+
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var newOfferDetail = new OfferDetail()
+                    {
+                       OfferPriceId = OfferPriceId,
+                       ServiceId = serviceID,
+                       ServiceLimitNumber = serviceLimitNum
+                    };
+
+
+                    Add(newOfferDetail);
+                    SaveChanges();
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.ToString());
+                }
+
+
+
+            }
+        }
+
+
+        public void CreateAttendance(int userId, int MemberOfferId, int ServiceId)
+
+        {
+            using (var scope = new TransactionScope())
+            {
+                try
+                {
+                    var memberAttendance = new MemberAttendance()
+                    {
+                        MemberOfferId = MemberOfferId,
+                        ServiceId = ServiceId,
+                        AttendanceDate = DateTime.Now
+                    }; 
+ 
+                    Add(memberAttendance);
+                    SaveChanges();
+                    var user = Find<Person>(userId);
+                   // string entityRecord = $"{user.PersonName} confirm Attendance.";
+                   // CreateAudit(ActionType.Add, Action.Attendance_Confirmation, userId, MasterEntity.MemberOffer, entityRecord);
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    throw new Exception(ex.ToString());
+                }
+
+
+
+            }
+        }
 
 
     }

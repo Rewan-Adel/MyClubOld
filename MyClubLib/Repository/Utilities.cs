@@ -66,6 +66,12 @@ namespace MyClubLib.Repository
         Delete = 3 
     }
 
+    public enum offerStatus
+    {
+        Active  = 1,
+        unctive = 2,
+
+    }
     public class Utilities
     {
        public string GetIpAddress()
